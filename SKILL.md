@@ -30,7 +30,7 @@ When a user says any of the following:
 
 Respond with:
 
-> ✅ **Dashboard Review Skill v6.1 is active.**
+> ✅ **Dashboard Review Skill is active.**
 >
 > Share a dashboard — image, PDF, screenshot, or text description — and I'll give you a full structured review across 6 dimensions:
 >
