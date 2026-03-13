@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Review Tool · Data Community Africa</title>
+<meta name="description" content="AI-powered dashboard review tool. Get a structured 6-dimension review of any Power BI, Tableau, or Looker dashboard — calibrated to your actual audience.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --teal:#0F6E56;--teal-light:#E1F5EE;--teal-mid:#1D9E75;
+    --text:#1a1a1a;--muted:#6b7280;--border:#e5e7eb;
+    --bg:#fff;--surface:#f9fafb;--danger:#dc2626;--warn:#d97706;--pass:#059669;
+  }
+  body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--surface);min-height:100vh}
+
+  header{background:var(--bg);border-bottom:1px solid var(--border);padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
+  .logo{display:flex;align-items:center;gap:10px}
+  .logo-icon{width:36px;height:36px;background:var(--teal);border-radius:8px;display:flex;align-items:center;justify-content:center}
+  .logo-icon svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2}
+  .logo-name{font-family:'DM Serif Display',serif;font-size:18px;color:var(--teal)}
+  .logo-by{font-size:11px;color:var(--muted);letter-spacing:.04em}
+  .header-link{font-size:13px;color:var(--teal);text-decoration:none;font-weight:500;border:1px solid var(--teal);padding:6px 14px;border-radius:6px;transition:all .15s}
+  .header-link:hover{background:var(--teal);color:#fff}
+
+  main{max-width:1100px;margin:0 auto;padding:32px 24px}
+
+  .hero{text-align:center;margin-bottom:40px}
+  .hero h1{font-family:'DM Serif Display',serif;font-size:40px;color:var(--teal);margin-bottom:12px}
+  .hero p{font-size:16px;color:var(--muted);max-width:580px;margin:0 auto;line-height:1.7}
+  .pill-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
+  .pill{font-size:12px;font-weight:500;padding:4px 12px;border-radius:20px;background:var(--teal-light);color:var(--teal)}
+
+  .app{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+
+  .card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:16px}
+
+  .card-title{font-family:'DM Serif Display',serif;font-size:18px;color:var(--teal);margin-bottom:4px}
+  .card-sub{font-size:13px;color:var(--muted)}
+
+  label{font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;display:block;margin-bottom:6px}
+
+  textarea{width:100%;min-height:180px;padding:12px;border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);background:var(--bg);resize:vertical;line-height:1.6;outline:none;transition:border-color .15s}
+  textarea:focus{border-color:var(--teal-mid)}
+  textarea::placeholder{color:#9ca3af}
+
+  .upload-zone{border:1.5px dashed var(--border);border-radius:8px;padding:20px;text-align:center;cursor:pointer;transition:all .15s;position:relative;background:var(--bg)}
+  .upload-zone:hover{border-color:var(--teal-mid);background:var(--teal-light)}
+  .upload-zone.has-image{border-style:solid;border-color:var(--teal-mid)}
+  .upload-zone p{font-size:13px;color:var(--muted)}
+  .upload-zone strong{color:var(--teal);font-weight:500}
+  .upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer}
+  .upload-preview{width:100%;max-height:130px;object-fit:contain;border-radius:6px;margin-bottom:8px}
+
+  .btn{width:100%;padding:14px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+  .btn:hover{background:var(--teal-mid)}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+
+  .btn-clear{width:100%;padding:10px;background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .15s}
+  .btn-clear:hover{border-color:var(--danger);color:var(--danger)}
+
+  .output-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:24px;overflow-y:auto;max-height:720px}
+
+  .empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:400px;text-align:center;gap:14px}
+  .empty-icon{width:52px;height:52px;border-radius:14px;background:var(--teal-light);display:flex;align-items:center;justify-content:center}
+  .empty-state h3{font-family:'DM Serif Display',serif;font-size:22px;color:var(--teal)}
+  .empty-state p{font-size:14px;color:var(--muted);max-width:260px;line-height:1.7}
+
+  .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:400px;gap:16px}
+  .spinner{width:36px;height:36px;border:2.5px solid var(--teal-light);border-top-color:var(--teal);border-radius:50%;animation:spin 0.8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loading p{font-size:14px;color:var(--muted)}
+
+  .review{display:flex;flex-direction:column;gap:20px}
+  .section-title{font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .audience-badge{display:inline-flex;align-items:center;gap:6px;background:var(--teal-light);color:var(--teal);font-size:13px;font-weight:500;padding:5px 12px;border-radius:20px;width:fit-content}
+  .summary-box{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;font-size:14px;color:var(--muted);line-height:1.7}
+  .scores-grid{display:flex;flex-direction:column;gap:6px}
+  .score-row{display:grid;grid-template-columns:1fr 48px 80px;align-items:center;gap:8px;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px}
+  .score-row.overall{background:var(--teal-light);border-color:var(--teal-mid)}
+  .score-label{font-size:13px;font-weight:500}
+  .score-label.overall{color:var(--teal);font-family:'DM Serif Display',serif;font-size:15px}
+  .score-num{font-size:15px;font-weight:500;text-align:right}
+  .score-badge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:5px;text-align:center}
+  .badge-pass{background:#d1fae5;color:#065f46}
+  .badge-warn{background:#fef3c7;color:#92400e}
+  .badge-fail{background:#fee2e2;color:#991b1b}
+  .finding-text{font-size:12px;color:var(--muted);padding:0 14px 8px;line-height:1.5}
+  .consistency-box{background:var(--bg);border-left:3px solid var(--teal-mid);padding:12px 14px;border-radius:0 8px 8px 0;font-size:13px;line-height:1.7}
+  .questions-list,.priorities-list,.missing-list{display:flex;flex-direction:column;gap:8px}
+  .question-item{display:flex;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px}
+  .q-num{font-size:12px;font-weight:500;color:var(--teal);min-width:20px;padding-top:2px}
+  .q-text{font-size:13px;line-height:1.6}
+  .priority-item{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 14px}
+  .priority-num{font-size:11px;font-weight:500;color:var(--teal);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+  .priority-text{font-size:13px;line-height:1.7}
+  .missing-item{display:flex;gap:10px;align-items:flex-start;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px}
+  .missing-dot{width:6px;height:6px;border-radius:50%;background:var(--warn);margin-top:6px;flex-shrink:0}
+  .missing-text{font-size:13px;line-height:1.6}
+  .praise-box{background:var(--teal-light);border:1px solid var(--teal-mid);border-radius:8px;padding:14px;font-size:13px;line-height:1.7}
+  .error-box{background:#fee2e2;border:1px solid #fca5a5;border-radius:8px;padding:14px;font-size:14px;color:var(--danger);line-height:1.6}
+
+  .dimensions-info{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:40px 0}
+  .dim-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px}
+  .dim-num{font-size:11px;font-weight:500;color:var(--teal);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+  .dim-name{font-size:14px;font-weight:500;margin-bottom:6px}
+  .dim-desc{font-size:12px;color:var(--muted);line-height:1.6}
+
+  footer{text-align:center;padding:32px 24px;border-top:1px solid var(--border);font-size:13px;color:var(--muted);background:var(--bg);margin-top:48px}
+  footer a{color:var(--teal);text-decoration:none}
+
+  @media(max-width:720px){
+    .app{grid-template-columns:1fr}
+    .dimensions-info{grid-template-columns:1fr}
+    .hero h1{font-size:28px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+    </div>
+    <div>
+      <div class="logo-name">Dashboard Review Tool</div>
+      <div class="logo-by">by David Abu · Data Community Africa</div>
+    </div>
+  </div>
+  <a href="https://github.com/David-Abu/dashboard-review-skill" class="header-link" target="_blank">View on GitHub</a>
+</header>
+
+<main>
+  <div class="hero">
+    <h1>Review any dashboard in seconds</h1>
+    <p>Describe your dashboard or upload a screenshot. Get a full structured review across 6 dimensions — always calibrated to your actual audience.</p>
+    <div class="pill-row">
+      <span class="pill">Power BI</span>
+      <span class="pill">Tableau</span>
+      <span class="pill">Looker</span>
+      <span class="pill">Google Data Studio</span>
+      <span class="pill">Any tool</span>
+    </div>
+  </div>
+
+  <div class="app">
+    <div class="card">
+      <div>
+        <div class="card-title">Your dashboard</div>
+        <div class="card-sub">Describe it or upload a screenshot — or both</div>
+      </div>
+
+      <div>
+        <label>Describe your dashboard</label>
+        <textarea id="desc" placeholder="Include: tool used (Power BI, Tableau, etc.), number of pages/tabs, who it was built for, and the key metrics shown. The more detail, the sharper the review."></textarea>
+      </div>
+
+      <div>
+        <label>Upload screenshot (optional)</label>
+        <div class="upload-zone" id="dropzone">
+          <input type="file" id="imgInput" accept="image/*" onchange="handleImage(event)">
+          <div id="uploadContent">
+            <p><strong>Click to upload</strong> or drag & drop</p>
+            <p style="font-size:11px;margin-top:4px">PNG, JPG, WEBP supported</p>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn" id="reviewBtn" onclick="runReview()">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        Run Review
+      </button>
+
+      <button class="btn-clear" id="clearBtn" onclick="clearAll()" style="display:none">Clear & start over</button>
+
+      <p style="font-size:12px;color:var(--muted);text-align:center;line-height:1.6">
+        Powered by Claude AI · 6-dimension framework · Audience-calibrated scoring<br>
+        Built on the <a href="https://github.com/David-Abu/dashboard-review-skill" target="_blank" style="color:var(--teal)">open-source skill</a>
+      </p>
+    </div>
+
+    <div class="output-card" id="output">
+      <div class="empty-state">
+        <div class="empty-icon">
+          <svg width="26" height="26" fill="none" stroke="var(--teal)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <h3>Ready to review</h3>
+        <p>Your structured review will appear here — scored, prioritised, and calibrated to your audience.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dimensions-info">
+    <div class="dim-card"><div class="dim-num">Dimension 1</div><div class="dim-name">Business Question & Purpose</div><div class="dim-desc">Does every page serve a clear question? Does critical info appear first for this audience?</div></div>
+    <div class="dim-card"><div class="dim-num">Dimension 2</div><div class="dim-name">Domain Knowledge</div><div class="dim-desc">Are these the right metrics for this industry? Does it treat a crisis as a crisis?</div></div>
+    <div class="dim-card"><div class="dim-num">Dimension 3</div><div class="dim-name">Audience Fit & Interactivity</div><div class="dim-desc">Is the depth, detail, and interactivity right for who will actually use this?</div></div>
+    <div class="dim-card"><div class="dim-num">Dimension 4</div><div class="dim-name">Data Accuracy & Story</div><div class="dim-desc">Facts vs insights test. Internal consistency. Time horizon adequacy.</div></div>
+    <div class="dim-card"><div class="dim-num">Dimension 5</div><div class="dim-name">Visual Design & Consistency</div><div class="dim-desc">Right chart types? Anti-patterns flagged. Top-left priority. Accessibility.</div></div>
+    <div class="dim-card"><div class="dim-num">Dimension 6</div><div class="dim-name">Actionability & The So What</div><div class="dim-desc">Every pattern → consequence → action. Calibrated to this audience's decision authority.</div></div>
+  </div>
+</main>
+
+<footer>
+  Built by <a href="https://github.com/David-Abu" target="_blank">David Abu</a> · Shared with <a href="https://www.datacommunityafrica.org/" target="_blank">Data Community Africa</a> ·
+  <a href="https://github.com/David-Abu/dashboard-review-skill" target="_blank">GitHub</a> · MIT License
+</footer>
+
+<script>
+let imageBase64 = null;
+let imageType = null;
+
+const SYSTEM_PROMPT = `You are a senior data analyst and dashboard design expert. You review dashboards using a structured 6-dimension framework. Your reviews are always calibrated to the dashboard's actual audience — never assumed to be for a CEO by default.
+
+STEP 0 — IDENTIFY THE AUDIENCE FIRST
+Determine who this dashboard is designed for:
+- C-Suite/Executive: headline KPIs only, 3-5 min review time
+- Department Head/Director: summary + one breakdown level, 5-10 min
+- Operations Manager: task-level detail, 10-20 min
+- Analyst/Data Team: full granularity, as needed
+- Field/Frontline Worker: single focused metric, 30 seconds
+- External Stakeholder/Client: curated highlights, 2-3 min
+
+STEP 1 — READ BEFORE JUDGE
+Check: (a) internal consistency — do segment totals match overall totals? flag arithmetic errors and deviation sign inconsistencies. (b) time horizon — is the date range sufficient for the claims? revenue needs 12+ months, churn needs 4-6 quarters. (c) reading flow — does critical info appear top-left?
+
+STEP 2 — EVALUATE ACROSS 6 DIMENSIONS
+Score each 0-100 and give PASS/WARN/FAIL:
+1. Business Question & Purpose — clear question? audience time test? top-left priority rule?
+2. Domain Knowledge & Business Logic — right metrics? cause-effect? crisis treated as crisis?
+3. Audience Fit & Interactivity — right depth? dashboard vs report distinction? navigation?
+4. Data Accuracy, Story & Definitions — facts vs insights test? benchmarks? time horizon?
+5. Visual Design, Chart Choice & Consistency — anti-patterns (3D, pie 5+, gauges, decorative maps)? visual count (2-3 per page)? accessibility (4.5:1 contrast)?
+6. Actionability & The So What — every pattern must end with consequence and action for THIS audience
+
+STEP 3 — CHALLENGE QUESTIONS: minimum 5, specific to actual numbers shown
+
+STEP 4 — OUTPUT FORMAT
+Return ONLY valid JSON, no other text:
+{
+  "audience": "identified audience and how determined",
+  "summary": "2-3 sentence factual summary",
+  "scores": [
+    {"dimension": "Business Question & Purpose", "score": 75, "status": "PASS", "finding": "one sentence"},
+    {"dimension": "Domain Knowledge & Business Logic", "score": 70, "status": "WARN", "finding": "one sentence"},
+    {"dimension": "Audience Fit & Interactivity", "score": 80, "status": "PASS", "finding": "one sentence"},
+    {"dimension": "Data Accuracy, Story & Definitions", "score": 65, "status": "WARN", "finding": "one sentence"},
+    {"dimension": "Visual Design, Chart Choice & Consistency", "score": 72, "status": "PASS", "finding": "one sentence"},
+    {"dimension": "Actionability & The So What", "score": 60, "status": "WARN", "finding": "one sentence"}
+  ],
+  "overall": 70,
+  "consistency": "Internal consistency findings or None found",
+  "questions": ["q1","q2","q3","q4","q5"],
+  "missing": ["missing 1","missing 2","missing 3"],
+  "priorities": ["priority 1 description","priority 2 description","priority 3 description"],
+  "praise": "Genuine specific praise"
+}`;
+
+function handleImage(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  imageType = file.type;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    imageBase64 = ev.target.result.split(',')[1];
+    const dz = document.getElementById('dropzone');
+    dz.classList.add('has-image');
+    document.getElementById('uploadContent').innerHTML = `<img src="${ev.target.result}" class="upload-preview"><p style="font-size:12px;color:var(--teal)">Image ready · click to change</p>`;
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearAll() {
+  document.getElementById('desc').value = '';
+  imageBase64 = null; imageType = null;
+  document.getElementById('dropzone').classList.remove('has-image');
+  document.getElementById('uploadContent').innerHTML = `<p><strong>Click to upload</strong> or drag & drop</p><p style="font-size:11px;margin-top:4px">PNG, JPG, WEBP supported</p>`;
+  document.getElementById('imgInput').value = '';
+  document.getElementById('output').innerHTML = `<div class="empty-state"><div class="empty-icon"><svg width="26" height="26" fill="none" stroke="var(--teal)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><h3>Ready to review</h3><p>Your structured review will appear here — scored, prioritised, and calibrated to your audience.</p></div>`;
+  document.getElementById('clearBtn').style.display = 'none';
+}
+
+function badge(s) {
+  const cls = s==='PASS'?'badge-pass':s==='WARN'?'badge-warn':'badge-fail';
+  return `<span class="score-badge ${cls}">${s}</span>`;
+}
+function scoreColor(s) { return s>=75?'var(--pass)':s>=55?'var(--warn)':'var(--danger)'; }
+
+function renderReview(data) {
+  const overall = data.overall || Math.round(data.scores.reduce((a,s)=>a+s.score,0)/data.scores.length);
+  let html = `<div class="review">`;
+  html += `<div><div class="section-title">Identified audience</div><div class="audience-badge">${data.audience}</div></div>`;
+  html += `<div><div class="section-title">What I see</div><div class="summary-box">${data.summary}</div></div>`;
+  html += `<div><div class="section-title">Dimension scores</div><div class="scores-grid">`;
+  data.scores.forEach(s => {
+    html += `<div class="score-row"><span class="score-label">${s.dimension}</span><span class="score-num" style="color:${scoreColor(s.score)}">${s.score}</span>${badge(s.status)}</div>`;
+    html += `<div class="finding-text">${s.finding}</div>`;
+  });
+  html += `<div class="score-row overall"><span class="score-label overall">Overall score</span><span class="score-num" style="color:var(--teal);font-size:20px;font-family:'DM Serif Display',serif">${overall}</span><span class="score-badge badge-pass" style="background:var(--teal);color:#fff">/ 100</span></div>`;
+  html += `</div></div>`;
+  html += `<div><div class="section-title">Internal consistency</div><div class="consistency-box">${data.consistency}</div></div>`;
+  html += `<div><div class="section-title">Challenge questions</div><div class="questions-list">`;
+  data.questions.forEach((q,i) => { html += `<div class="question-item"><span class="q-num">${i+1}</span><span class="q-text">${q}</span></div>`; });
+  html += `</div></div>`;
+  html += `<div><div class="section-title">Missing analysis</div><div class="missing-list">`;
+  data.missing.forEach(m => { html += `<div class="missing-item"><div class="missing-dot"></div><div class="missing-text">${m}</div></div>`; });
+  html += `</div></div>`;
+  html += `<div><div class="section-title">Top 3 priorities</div><div class="priorities-list">`;
+  data.priorities.forEach((p,i) => { html += `<div class="priority-item"><div class="priority-num">Priority ${i+1}</div><div class="priority-text">${p}</div></div>`; });
+  html += `</div></div>`;
+  html += `<div><div class="section-title">One thing done well</div><div class="praise-box">${data.praise}</div></div>`;
+  html += `</div>`;
+  return html;
+}
+
+async function runReview() {
+  const desc = document.getElementById('desc').value.trim();
+  if (!desc && !imageBase64) { alert('Please describe your dashboard or upload a screenshot first.'); return; }
+  const btn = document.getElementById('reviewBtn');
+  btn.disabled = true;
+  btn.innerHTML = 'Reviewing...';
+  document.getElementById('output').innerHTML = `<div class="loading"><div class="spinner"></div><p>Analysing your dashboard...</p></div>`;
+  const userContent = [];
+  if (imageBase64) userContent.push({type:'image',source:{type:'base64',media_type:imageType,data:imageBase64}});
+  userContent.push({type:'text',text:desc||'Please review the dashboard in the uploaded image.'});
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYSTEM_PROMPT,messages:[{role:'user',content:userContent}]})
+    });
+    const data = await res.json();
+    const raw = data.content.filter(b=>b.type==='text').map(b=>b.text).join('');
+    const review = JSON.parse(raw.replace(/```json\n?|\n?```/g,'').trim());
+    document.getElementById('output').innerHTML = renderReview(review);
+    document.getElementById('clearBtn').style.display = 'block';
+  } catch(err) {
+    document.getElementById('output').innerHTML = `<div class="error-box"><strong>Review failed.</strong> ${err.message}<br><br>Check your input and try again.</div>`;
+  }
+  btn.disabled = false;
+  btn.innerHTML = 'Run Review';
+}
+</script>
+</body>
+</html>
