@@ -140,7 +140,7 @@ Full details in [`dashboard-review/references/methodology.md`](dashboard-review/
 
 Issues, improvements, and new example reviews are welcome. Open a PR or file an issue.
 
-Built by **David Abu** · Shared with the [Nigerians in Seattle](https://www.meetup.com/nigerians-in-seattle/) and [Data Community Africa](https://www.datacommunityafrica.org/) communities.
+Built by **David Abu** · [Data Community Africa](https://www.datacommunityafrica.org/) communities.
 
 ---
 
