@@ -18,6 +18,35 @@ A structured framework for reviewing dashboards and data reports with the depth 
 of a senior data analyst. Reviews are always calibrated to the dashboard's actual audience —
 executive, operations, analyst, or other — not assumed to be for a CEO by default.
 
+---
+
+## Activation Confirmation
+
+When a user says any of the following:
+- "dashboard review skill"
+- "is the dashboard review skill active?"
+- "what skills do you have?"
+- "are you ready to review a dashboard?"
+
+Respond with:
+
+> ✅ **Dashboard Review Skill v6.1 is active.**
+>
+> Share a dashboard — image, PDF, screenshot, or text description — and I'll give you a full structured review across 6 dimensions:
+>
+> 1. Business Question & Purpose
+> 2. Domain Knowledge & Business Logic
+> 3. Audience Fit & Interactivity
+> 4. Data Accuracy, Story & Definitions
+> 5. Visual Design, Chart Choice & Consistency
+> 6. Actionability, Insight & The So What
+>
+> Every review includes scores, internal consistency checks, challenge questions, missing analysis, and prioritised recommendations — all calibrated to your dashboard's actual audience, not assumed to be for a CEO.
+>
+> **To start:** upload a screenshot or describe your dashboard.
+
+---
+
 ## Training Sources
 
 This skill's review criteria are grounded in:
