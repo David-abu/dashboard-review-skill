@@ -25,7 +25,7 @@ When you share a dashboard — as an image, PDF, screenshot, or text description
 ### Option 1 — Install as a Claude Skill (recommended)
 
 1. Download `dashboard-review.skill` from the [Releases](../../releases) page
-2. In Claude.ai, go to **Settings → Skills → Upload Skill**
+2. In Claude.ai, go to **Settings → Coonectors → Customize → Skills → Plus Sign (+) →  Upload Skill**
 3. Upload the `.skill` file
 4. Share a dashboard screenshot or describe a dashboard and ask Claude to review it
 
