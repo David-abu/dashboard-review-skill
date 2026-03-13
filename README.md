@@ -121,24 +121,6 @@ dashboard-review-skill/
 
 ---
 
-## Example Output
-
-See [`dashboard-review/examples/construction-dashboard-review.md`](dashboard-review/examples/construction-dashboard-review.md) for a complete review of a real 4-tab Power BI construction management dashboard — including internal consistency findings, challenge questions, missing analysis, and scored dimensions.
-
----
-
-## Training Sources
-
-This skill's evaluation criteria are grounded in 14 sources:
-
-**Books**: Knaflic · Few (×2) · Tufte (×2) · Berinato · Healy · Yau · Wexler/Shaffer/Cotgreave · Kleppmann · Akidau et al. · Deutsch
-
-**Platform docs**: Microsoft Learn (Design Effective Reports in Power BI) · Tableau Help (Dashboard Best Practices)
-
-Full details in [`dashboard-review/references/methodology.md`](dashboard-review/references/methodology.md).
-
----
-
 ## Version History
 
 | Version | Summary |
