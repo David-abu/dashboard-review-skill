@@ -25,9 +25,23 @@ When you share a dashboard — as an image, PDF, screenshot, or text description
 ### Option 1 — Install as a Claude Skill (recommended)
 
 1. Download `dashboard-review.skill` from the [Releases](../../releases) page
-2. In Claude.ai, go to **Settings → Coonectors → Customize → Skills → Plus Sign (+) →  Upload Skill**
+2. In Claude.ai, go to **Settings → Connectors → Customize → Skills → Plus Sign (+) → Upload Skill**
 3. Upload the `.skill` file
 4. Share a dashboard screenshot or describe a dashboard and ask Claude to review it
+
+---
+
+## How to Confirm the Skill is Working
+
+After installing, open a new Claude conversation and type:
+
+```
+is the dashboard review skill active?
+```
+
+Claude will respond confirming the skill is installed and list exactly what it can do. If Claude doesn't respond with the confirmation, the skill file wasn't installed correctly — try re-uploading it.
+
+---
 
 ### Option 2 — Copy the Prompt Directly
 
@@ -140,7 +154,7 @@ Full details in [`dashboard-review/references/methodology.md`](dashboard-review/
 
 Issues, improvements, and new example reviews are welcome. Open a PR or file an issue.
 
-Built by **David Abu** · [Data Community Africa](https://www.datacommunityafrica.org/) communities.
+Built by **David Abu** · Shared with the [Data Community Africa](https://www.datacommunityafrica.org/) community.
 
 ---
 
