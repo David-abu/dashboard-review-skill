@@ -19,6 +19,15 @@ When you share a dashboard — as an image, PDF, screenshot, or text description
 - **One thing done well** — genuine, specific praise
 
 ---
+## Try It Now
+
+There are three ways to use the Dashboard Review Skill:
+
+| Option | Best for |
+|--------|----------|
+| 🔗 [Live Web App](https://david-abu.github.io/dashboard-review-skill/) | Anyone — no Claude account needed |
+| 🔗 [Claude Artifact](https://claude.ai/public/artifacts/3b9dd0c9-6590-4fce-bf8d-86687261c0bf) | Quick share via link |
+| ⬇️ [Install as Claude Skill](#installation) | Claude users who want it embedded in their workflow |
 
 ## Quick Start
 
