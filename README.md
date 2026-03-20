@@ -29,7 +29,7 @@ There are three ways to use the Dashboard Review Skill:
 | 🔗 [Claude Artifact](https://claude.ai/public/artifacts/3b9dd0c9-6590-4fce-bf8d-86687261c0bf) | Quick share via link |
 | ⬇️ [Install as Claude Skill](#installation) | Claude users who want it embedded in their workflow |
 
-## Quick Start
+## To install on Claude for Claude users above
 
 ### Option 1 — Install as a Claude Skill (recommended)
 
