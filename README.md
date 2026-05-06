@@ -46,13 +46,14 @@ Use this when you want a reusable ChatGPT workspace for dashboard reviews.
 Dashboard Review
 ```
 
-4. Open the project's settings or instructions area.
-5. Copy the full contents of `SKILL.md` from this repo.
-6. Paste it into the Project instructions.
-7. Save the project.
-8. Start a new chat inside that project.
-9. Upload a dashboard screenshot, PDF, or describe the dashboard.
-10. Ask:
+4. Inside the project, click the three-dot menu (`...`) in the top-right corner.
+5. Open the project instructions or settings from that menu.
+6. Copy the full contents of `SKILL.md` from this repo.
+7. Paste it into the Project instructions.
+8. Save the project.
+9. Start a new chat inside that project.
+10. Upload a dashboard screenshot, PDF, or describe the dashboard.
+11. Ask:
 
 ```text
 Review this dashboard.
