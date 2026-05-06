@@ -38,7 +38,7 @@ This repo does not require a paid OpenAI API key, Anthropic API key, Cloudflare 
 
 Use this when you want a reusable ChatGPT workspace for dashboard reviews.
 
-Use `CHATGPT_PROJECT_INSTRUCTIONS.md` for ChatGPT Projects. It is a shorter version of the skill that fits ChatGPT's 8,000-character project instruction limit.
+Use `CHATGPT_PROJECT_INSTRUCTIONS.md` for ChatGPT Projects. It is a compact v3 version of the skill, kept around 6,000 characters so it fits ChatGPT's project instruction limit.
 
 1. Open ChatGPT and sign in.
 2. Create a new Project.
@@ -178,7 +178,7 @@ The skill first determines who the dashboard was built for, then applies all sco
 dashboard-review-skill/
 |-- README.md                 # Project overview and setup notes
 |-- SKILL.md                  # Full portable skill instructions for Copilot, Codex, Claude, and other AI tools
-|-- CHATGPT_PROJECT_INSTRUCTIONS.md # Short ChatGPT Project version under 8,000 characters
+|-- CHATGPT_PROJECT_INSTRUCTIONS.md # Compact ChatGPT Project version around 6,000 characters
 |-- dashboard-review.skill    # Packaged Claude skill archive
 |-- agents/
 |   `-- openai.yaml           # ChatGPT/Codex skill metadata
