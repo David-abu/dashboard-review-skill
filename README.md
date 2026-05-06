@@ -20,23 +20,25 @@ When you share a dashboard as an image, PDF, screenshot, or text description, th
 
 | Option | Best for | Cost model |
 |--------|----------|------------|
-| ChatGPT Project + `SKILL.md` | ChatGPT users who want a reusable dashboard review workspace | Free for ChatGPT users with Projects access |
+| ChatGPT Project + `CHATGPT_PROJECT_INSTRUCTIONS.md` | ChatGPT users who want a reusable dashboard review workspace | Free for ChatGPT users with Projects access |
 | [Live Prompt Builder](https://david-abu.github.io/dashboard-review-skill/) | Anyone who wants a copy-ready prompt without setup | Free, no API key, no backend |
 | `SKILL.md` pasted into any AI chat | Copilot, Gemini, Codex, Claude, or any assistant that accepts instructions | Free or included through the user's existing AI tool |
 | `dashboard-review.skill` | Claude users who want Claude's `/dashboard-review` skill experience | Uses the user's Claude plan |
 
 Recommended free path:
 
-1. If you use ChatGPT often, create a ChatGPT Project and add `SKILL.md` as the project instructions.
+1. If you use ChatGPT often, create a ChatGPT Project and add `CHATGPT_PROJECT_INSTRUCTIONS.md` as the project instructions.
 2. If you only need a quick review, use the Live Prompt Builder and paste the generated prompt into your AI chat.
 3. If you use Claude and have Skills enabled, install `dashboard-review.skill`.
 4. If you use Copilot, Gemini, Codex, or another assistant, paste `SKILL.md` as the instruction prompt.
 
 This repo does not require a paid OpenAI API key, Anthropic API key, Cloudflare Worker, or Custom GPT builder subscription.
 
-## Free ChatGPT Setup: Project + SKILL.md
+## Free ChatGPT Setup: Project Instructions
 
 Use this when you want a reusable ChatGPT workspace for dashboard reviews.
+
+Use `CHATGPT_PROJECT_INSTRUCTIONS.md` for ChatGPT Projects. It is a shorter version of the skill that fits ChatGPT's 8,000-character project instruction limit.
 
 1. Open ChatGPT and sign in.
 2. Create a new Project.
@@ -48,7 +50,7 @@ Dashboard Review
 
 4. Inside the project, click the three-dot menu (`...`) in the top-right corner.
 5. Open the project instructions or settings from that menu.
-6. Copy the full contents of `SKILL.md` from this repo.
+6. Copy the full contents of `CHATGPT_PROJECT_INSTRUCTIONS.md` from this repo.
 7. Paste it into the Project instructions.
 8. Save the project.
 9. Start a new chat inside that project.
@@ -175,7 +177,8 @@ The skill first determines who the dashboard was built for, then applies all sco
 ```text
 dashboard-review-skill/
 |-- README.md                 # Project overview and setup notes
-|-- SKILL.md                  # Portable instructions for ChatGPT Projects, Copilot, Codex, Claude, and other AI tools
+|-- SKILL.md                  # Full portable skill instructions for Copilot, Codex, Claude, and other AI tools
+|-- CHATGPT_PROJECT_INSTRUCTIONS.md # Short ChatGPT Project version under 8,000 characters
 |-- dashboard-review.skill    # Packaged Claude skill archive
 |-- agents/
 |   `-- openai.yaml           # ChatGPT/Codex skill metadata
