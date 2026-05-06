@@ -16,13 +16,56 @@ When you share a dashboard as an image, PDF, screenshot, or text description, th
 - Top 3 prioritized recommendations
 - One specific thing done well
 
-## Try It
+## Choose The Right Tool
 
 | Option | Best for | Cost model |
 |--------|----------|------------|
-| `SKILL.md` | First option for ChatGPT, Copilot, Codex, Claude, Gemini, or other AI users | Free or included for many users through their existing AI tool |
-| [Live Prompt Builder](https://david-abu.github.io/dashboard-review-skill/) | Anyone who wants a copy-ready review prompt | Free, no API key |
-| `dashboard-review.skill` | Claude users who want the skill installed | Uses the user's Claude plan |
+| ChatGPT Project + `SKILL.md` | ChatGPT users who want a reusable dashboard review workspace | Free for ChatGPT users with Projects access |
+| [Live Prompt Builder](https://david-abu.github.io/dashboard-review-skill/) | Anyone who wants a copy-ready prompt without setup | Free, no API key, no backend |
+| `SKILL.md` pasted into any AI chat | Copilot, Gemini, Codex, Claude, or any assistant that accepts instructions | Free or included through the user's existing AI tool |
+| `dashboard-review.skill` | Claude users who want Claude's `/dashboard-review` skill experience | Uses the user's Claude plan |
+
+Recommended free path:
+
+1. If you use ChatGPT often, create a ChatGPT Project and add `SKILL.md` as the project instructions.
+2. If you only need a quick review, use the Live Prompt Builder and paste the generated prompt into your AI chat.
+3. If you use Claude and have Skills enabled, install `dashboard-review.skill`.
+4. If you use Copilot, Gemini, Codex, or another assistant, paste `SKILL.md` as the instruction prompt.
+
+This repo does not require a paid OpenAI API key, Anthropic API key, Cloudflare Worker, or Custom GPT builder subscription.
+
+## Free ChatGPT Setup: Project + SKILL.md
+
+Use this when you want a reusable ChatGPT workspace for dashboard reviews.
+
+1. Open ChatGPT and sign in.
+2. Create a new Project.
+3. Name the project:
+
+```text
+Dashboard Review
+```
+
+4. Open the project's settings or instructions area.
+5. Copy the full contents of `SKILL.md` from this repo.
+6. Paste it into the Project instructions.
+7. Save the project.
+8. Start a new chat inside that project.
+9. Upload a dashboard screenshot, PDF, or describe the dashboard.
+10. Ask:
+
+```text
+Review this dashboard.
+```
+
+Use this option when:
+
+- You want ChatGPT to remember the review framework across multiple dashboard review chats.
+- You review dashboards often.
+- You do not want to create or pay for a Custom GPT.
+- You want the cleanest free ChatGPT workflow.
+
+Note: ChatGPT does not currently support custom user slash commands like Claude's `/dashboard-review`. A ChatGPT Project is the closest free ChatGPT-native replacement.
 
 ## Free Public App
 
@@ -37,26 +80,47 @@ How it works:
 
 This keeps the public app free to host and free to use. No visitor data or images are sent anywhere by the page.
 
+Use this option when:
+
+- You want the fastest no-setup workflow.
+- You are sharing the tool with people who may use different AI assistants.
+- You want a structured prompt that works in ChatGPT, Microsoft Copilot, Claude, Gemini, Codex, or another AI tool.
+- You do not want users to install anything.
+
+## Use With Copilot, Gemini, Codex, Or Other AI Tools
+
+Use `SKILL.md` when the AI tool lets you paste custom instructions, system prompts, or reusable context.
+
+1. Open `SKILL.md`.
+2. Copy the full file.
+3. Paste it into the AI tool's instructions or into the start of a new chat.
+4. Add:
+
+```text
+Use these instructions as your dashboard review framework.
+```
+
+5. Upload or describe the dashboard.
+6. Ask for a review.
+
 ## Install As A Claude Skill
 
 1. Download `dashboard-review.skill` from the repo or Releases page.
 2. In Claude.ai, go to Settings -> Connectors -> Customize -> Skills -> Plus Sign (+) -> Upload Skill.
 3. Upload the `.skill` file.
-4. Share a dashboard screenshot or describe a dashboard and ask Claude to review it.
+4. In Claude, type:
+
+```text
+/dashboard-review
+```
+
+5. Share a dashboard screenshot or describe a dashboard and ask Claude to review it.
 
 To confirm it is working, start a new Claude conversation and ask:
 
 ```text
 is the dashboard review skill active?
 ```
-
-## Use With ChatGPT, Copilot, Codex, Or Claude
-
-Try `SKILL.md` first. It is the most portable version of the framework and works with tools many people already have access to, including ChatGPT, Microsoft Copilot, Codex, Claude, Gemini, and other AI assistants.
-
-Paste `SKILL.md` into the model's instructions, add it as a local Codex skill, or use it as the system/developer prompt in an app.
-
-This repo also includes `agents/openai.yaml` so Codex-style skill lists can display the skill cleanly.
 
 ## How To Trigger A Review
 
@@ -109,20 +173,21 @@ The skill first determines who the dashboard was built for, then applies all sco
 
 ```text
 dashboard-review-skill/
-├── README.md                 # Project overview and setup notes
-├── SKILL.md                  # First-choice instructions for ChatGPT, Copilot, Codex, Claude, and other AI tools
-├── dashboard-review.skill    # Packaged Claude skill archive
-├── agents/
-│   └── openai.yaml           # ChatGPT/Codex skill metadata
-├── docs/
-│   └── index.html            # Free GitHub Pages prompt builder
-└── .gitignore                # Local tooling ignores
+|-- README.md                 # Project overview and setup notes
+|-- SKILL.md                  # Portable instructions for ChatGPT Projects, Copilot, Codex, Claude, and other AI tools
+|-- dashboard-review.skill    # Packaged Claude skill archive
+|-- agents/
+|   `-- openai.yaml           # ChatGPT/Codex skill metadata
+|-- docs/
+|   `-- index.html            # Free GitHub Pages prompt builder
+`-- .gitignore                # Local tooling ignores
 ```
 
 ## Roadmap
 
 - Refresh the packaged `dashboard-review.skill` after source updates.
 - Add example review prompts and outputs.
+- Add screenshots for the ChatGPT Project setup flow.
 - Add a short guide for installing `SKILL.md` as a local Codex skill.
 
 ## License
