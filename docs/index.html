@@ -42,7 +42,7 @@
   .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .upload-zone{border:1.5px dashed var(--border);border-radius:8px;padding:20px;text-align:center;cursor:pointer;transition:all .15s;position:relative;background:var(--bg)}
   .upload-zone:hover{border-color:var(--teal-mid);background:var(--teal-light)}
-  .upload-zone.has-image{border-style:solid;border-color:var(--teal-mid)}
+  .upload-zone.has-file{border-style:solid;border-color:var(--teal-mid)}
   .upload-zone p{font-size:13px;color:var(--muted)}
   .upload-zone strong{color:var(--teal);font-weight:500}
   .upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer}
@@ -91,13 +91,15 @@
 <main>
   <section class="hero">
     <h1>Build a dashboard review prompt</h1>
-    <p>Describe your dashboard, optionally attach a screenshot, then copy a structured review prompt into ChatGPT, Copilot, Claude, Gemini, Codex, or any AI assistant. No API key, backend, or paid public inference required.</p>
+    <p>Describe your dashboard, optionally attach a PBIX, Tableau workbook, PDF, spreadsheet, screenshot, or other dashboard file, then copy a structured review prompt into ChatGPT, Copilot, Claude, Gemini, Codex, or any AI assistant. No API key, backend, or paid public inference required.</p>
     <div class="pill-row">
       <span class="pill">Power BI</span>
+      <span class="pill">PBIX</span>
       <span class="pill">Tableau</span>
+      <span class="pill">TWBX</span>
       <span class="pill">Looker</span>
-      <span class="pill">Google Data Studio</span>
-      <span class="pill">Any dashboard</span>
+      <span class="pill">PDF</span>
+      <span class="pill">Any file</span>
     </div>
   </section>
 
@@ -125,12 +127,12 @@
       </div>
 
       <div>
-        <label>Upload screenshot (optional)</label>
+        <label>Upload dashboard file (optional)</label>
         <div class="upload-zone" id="dropzone">
-          <input type="file" id="imgInput" accept="image/*" onchange="handleImage(event)">
+          <input type="file" id="fileInput" onchange="handleFile(event)">
           <div id="uploadContent">
             <p><strong>Click to upload</strong> or drag & drop</p>
-            <p style="font-size:11px;margin-top:4px">The image stays in your browser. Attach it again in your AI chat.</p>
+            <p style="font-size:11px;margin-top:4px">PBIX, TWB/TWBX, PDF, Excel, CSV, image, or any file. It stays in your browser.</p>
           </div>
         </div>
       </div>
@@ -141,7 +143,7 @@
       </button>
       <button class="btn-clear" onclick="clearAll()">Clear & start over</button>
 
-      <p class="note">This free version creates the review prompt. For the most complete workflow, try the repo's SKILL.md first in ChatGPT, Copilot, Codex, Claude, Gemini, or your preferred AI tool.</p>
+      <p class="note">This free version creates the review prompt. It does not read the file itself. Attach the same file in your AI chat after copying the prompt.</p>
     </div>
 
     <div class="output-card" id="output">
@@ -171,7 +173,25 @@
 </footer>
 
 <script>
-let uploadedImageName = '';
+let uploadedFile = null;
+
+const dropzone = document.getElementById('dropzone');
+dropzone.addEventListener('dragover', (event) => {
+  event.preventDefault();
+  dropzone.style.borderColor = 'var(--teal-mid)';
+  dropzone.style.background = 'var(--teal-light)';
+});
+dropzone.addEventListener('dragleave', () => {
+  dropzone.style.borderColor = '';
+  dropzone.style.background = '';
+});
+dropzone.addEventListener('drop', (event) => {
+  event.preventDefault();
+  dropzone.style.borderColor = '';
+  dropzone.style.background = '';
+  const file = event.dataTransfer.files[0];
+  if (file) processFile(file);
+});
 
 const REVIEW_FRAMEWORK = `You are a senior data analyst and dashboard design expert. Review this dashboard using a structured 6-dimension framework. Always calibrate the review to the dashboard's actual audience. Do not assume it is for a CEO by default.
 
@@ -218,17 +238,37 @@ Return:
 - TOP 3 PRIORITIES - what to change, why it matters, and what the audience gains.
 - ONE THING DONE WELL - genuine, specific praise.`;
 
-function handleImage(e) {
+function handleFile(e) {
   const file = e.target.files[0];
   if (!file) return;
-  uploadedImageName = file.name;
-  const reader = new FileReader();
-  reader.onload = (ev) => {
-    const dz = document.getElementById('dropzone');
-    dz.classList.add('has-image');
-    document.getElementById('uploadContent').innerHTML = `<img src="${ev.target.result}" class="upload-preview"><p style="font-size:12px;color:var(--teal)">Screenshot ready: ${escapeHtml(file.name)}</p>`;
+  processFile(file);
+}
+
+function processFile(file) {
+  uploadedFile = {
+    name: file.name,
+    type: file.type || inferFileType(file.name),
+    size: formatFileSize(file.size),
+    isImage: file.type.startsWith('image/')
   };
-  reader.readAsDataURL(file);
+
+  const dz = document.getElementById('dropzone');
+  dz.classList.add('has-file');
+
+  if (uploadedFile.isImage) {
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      document.getElementById('uploadContent').innerHTML = `<img src="${ev.target.result}" class="upload-preview"><p style="font-size:12px;color:var(--teal)">File ready: ${escapeHtml(file.name)} (${uploadedFile.size})</p>`;
+    };
+    reader.readAsDataURL(file);
+    return;
+  }
+
+  document.getElementById('uploadContent').innerHTML = `
+    <p><strong>File ready:</strong> ${escapeHtml(file.name)}</p>
+    <p style="font-size:11px;margin-top:4px">${escapeHtml(uploadedFile.type)} · ${uploadedFile.size}</p>
+    <p style="font-size:11px;margin-top:4px">Attach this same file in your AI chat after copying the prompt.</p>
+  `;
 }
 
 function generatePrompt() {
@@ -236,14 +276,14 @@ function generatePrompt() {
   const audience = document.getElementById('audience').value.trim();
   const desc = document.getElementById('desc').value.trim();
 
-  if (!desc && !uploadedImageName) {
-    alert('Please describe your dashboard or upload a screenshot first.');
+  if (!desc && !uploadedFile) {
+    alert('Please describe your dashboard or upload a dashboard file first.');
     return;
   }
 
-  const imageInstruction = uploadedImageName
-    ? `\n\nI will attach a dashboard screenshot named "${uploadedImageName}" in this chat. Use the image as the primary evidence, and use my notes below as extra context.`
-    : `\n\nI am not attaching an image, so review based on the written description below.`;
+  const fileInstruction = uploadedFile
+    ? `\n\nI will attach a dashboard/report file named "${uploadedFile.name}" in this chat. File type: ${uploadedFile.type}. File size: ${uploadedFile.size}. Use the uploaded file as the primary evidence, and use my notes below as extra context. If the AI tool cannot directly inspect this file type, ask me to export screenshots, PDFs, images, or key pages from it.`
+    : `\n\nI am not attaching a file, so review based on the written description below.`;
 
   const context = [
     tool ? `Tool used: ${tool}` : '',
@@ -251,7 +291,7 @@ function generatePrompt() {
     desc ? `Dashboard description:\n${desc}` : ''
   ].filter(Boolean).join('\n\n');
 
-  const prompt = `${REVIEW_FRAMEWORK}${imageInstruction}\n\nDASHBOARD CONTEXT\n${context || 'Use the attached screenshot as the dashboard context.'}\n\nBe specific. Cite actual visible numbers, labels, chart choices, and layout decisions where possible. Avoid generic dashboard advice.`;
+  const prompt = `${REVIEW_FRAMEWORK}${fileInstruction}\n\nDASHBOARD CONTEXT\n${context || 'Use the attached dashboard/report file as the dashboard context.'}\n\nBe specific. Cite actual visible numbers, labels, chart choices, and layout decisions where possible. Avoid generic dashboard advice.`;
 
   renderPrompt(prompt);
 }
@@ -260,11 +300,11 @@ function renderPrompt(prompt) {
   document.getElementById('output').innerHTML = `
     <div>
       <div class="card-title">Copy-ready prompt</div>
-      <div class="card-sub">Paste this into ChatGPT, Copilot, Claude, Gemini, Codex, or another AI assistant. If you uploaded a screenshot, attach the same image there too.</div>
+      <div class="card-sub">Paste this into ChatGPT, Copilot, Claude, Gemini, Codex, or another AI assistant. If you uploaded a file here, attach the same file there too.</div>
     </div>
     <textarea class="prompt-output" id="promptOutput" readonly>${escapeHtml(prompt)}</textarea>
     <button class="btn btn-secondary" onclick="copyPrompt(this)">Copy Prompt</button>
-    <p class="note">This page does not send your dashboard or screenshot anywhere. Everything happens in your browser.</p>
+    <p class="note">This page does not send your dashboard file anywhere. Everything happens in your browser.</p>
   `;
 }
 
@@ -281,13 +321,13 @@ async function copyPrompt(button) {
 }
 
 function clearAll() {
-  uploadedImageName = '';
+  uploadedFile = null;
   document.getElementById('tool').value = '';
   document.getElementById('audience').value = '';
   document.getElementById('desc').value = '';
-  document.getElementById('imgInput').value = '';
-  document.getElementById('dropzone').classList.remove('has-image');
-  document.getElementById('uploadContent').innerHTML = `<p><strong>Click to upload</strong> or drag & drop</p><p style="font-size:11px;margin-top:4px">The image stays in your browser. Attach it again in your AI chat.</p>`;
+  document.getElementById('fileInput').value = '';
+  document.getElementById('dropzone').classList.remove('has-file');
+  document.getElementById('uploadContent').innerHTML = `<p><strong>Click to upload</strong> or drag & drop</p><p style="font-size:11px;margin-top:4px">PBIX, TWB/TWBX, PDF, Excel, CSV, image, or any file. It stays in your browser.</p>`;
   document.getElementById('output').innerHTML = `<div class="empty-state" id="emptyState"><div class="empty-icon"><svg width="26" height="26" fill="none" stroke="var(--teal)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><h3>Ready to build</h3><p>Your copy-ready dashboard review prompt will appear here.</p></div>`;
 }
 
@@ -297,6 +337,37 @@ function escapeHtml(value) {
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;');
+}
+
+function inferFileType(fileName) {
+  const ext = fileName.split('.').pop().toLowerCase();
+  const types = {
+    pbix: 'Power BI PBIX',
+    pbit: 'Power BI template',
+    pbip: 'Power BI project',
+    twb: 'Tableau workbook',
+    twbx: 'Tableau packaged workbook',
+    tds: 'Tableau data source',
+    tdsx: 'Tableau packaged data source',
+    hyper: 'Tableau extract',
+    xlsx: 'Excel workbook',
+    xls: 'Excel workbook',
+    csv: 'CSV data file',
+    pdf: 'PDF document'
+  };
+  return types[ext] || `${ext.toUpperCase()} file`;
+}
+
+function formatFileSize(bytes) {
+  if (!bytes) return 'unknown size';
+  const units = ['B', 'KB', 'MB', 'GB'];
+  let size = bytes;
+  let unit = 0;
+  while (size >= 1024 && unit < units.length - 1) {
+    size /= 1024;
+    unit += 1;
+  }
+  return `${size.toFixed(size >= 10 || unit === 0 ? 0 : 1)} ${units[unit]}`;
 }
 </script>
 </body>

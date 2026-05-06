@@ -6,7 +6,7 @@ Reviews are calibrated to the dashboard's actual audience, such as executives, d
 
 ## What It Does
 
-When you share a dashboard as an image, PDF, screenshot, or text description, the framework produces a structured review covering:
+When you share a dashboard as a PBIX file, Tableau file, PDF, spreadsheet, image, screenshot, or text description, the framework produces a structured review covering:
 
 - 6 scored dimensions: business question, domain knowledge, audience fit, data story, visual design, and actionability
 - Internal consistency checks for arithmetic, totals, units, and deviation signs
@@ -54,7 +54,7 @@ Dashboard Review
 7. Paste it into the Project instructions.
 8. Save the project.
 9. Start a new chat inside that project.
-10. Upload a dashboard screenshot, PDF, or describe the dashboard.
+10. Upload a dashboard file, screenshot, PDF, or describe the dashboard.
 11. Ask:
 
 ```text
@@ -76,18 +76,18 @@ The GitHub Pages app is a prompt builder. It does not call Anthropic, OpenAI, or
 
 How it works:
 
-1. Add dashboard context and optionally upload a screenshot.
+1. Add dashboard context and optionally upload a PBIX, Tableau workbook, PDF, spreadsheet, screenshot, or other dashboard file.
 2. The app builds a structured review prompt in your browser.
 3. Copy the prompt into ChatGPT, Microsoft Copilot, Claude, Gemini, Codex, or another AI assistant.
-4. If you uploaded a screenshot, attach the same image in that AI chat.
+4. If you uploaded a file, attach the same file in that AI chat.
 
-This keeps the public app free to host and free to use. No visitor data or images are sent anywhere by the page.
+This keeps the public app free to host and free to use. No visitor data or files are sent anywhere by the page.
 
 Use this option when:
 
 - You want the fastest no-setup workflow.
 - You are sharing the tool with people who may use different AI assistants.
-- You want a structured prompt that works in ChatGPT, Microsoft Copilot, Claude, Gemini, Codex, or another AI tool.
+- You want a structured prompt that works with PBIX files, Tableau workbooks, PDFs, spreadsheets, screenshots, and other dashboard files in ChatGPT, Microsoft Copilot, Claude, Gemini, Codex, or another AI tool.
 - You do not want users to install anything.
 
 ## Use With Copilot, Gemini, Codex, Or Other AI Tools
@@ -103,7 +103,7 @@ Use `SKILL.md` when the AI tool lets you paste custom instructions, system promp
 Use these instructions as your dashboard review framework.
 ```
 
-5. Upload or describe the dashboard.
+5. Upload a dashboard file or describe the dashboard.
 6. Ask for a review.
 
 ## Install As A Claude Skill
@@ -117,7 +117,7 @@ Use these instructions as your dashboard review framework.
 /dashboard-review
 ```
 
-5. Share a dashboard screenshot or describe a dashboard and ask Claude to review it.
+5. Share a dashboard file, screenshot, or description and ask Claude to review it.
 
 To confirm it is working, start a new Claude conversation and ask:
 
@@ -138,7 +138,7 @@ Score my dashboard
 Help me improve this report
 ```
 
-Or upload a dashboard image/PDF and ask for a review.
+Or upload a PBIX, Tableau file, spreadsheet, dashboard image/PDF, or any file your AI tool can inspect and ask for a review.
 
 ## Review Framework Overview
 
