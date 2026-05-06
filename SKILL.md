@@ -18,6 +18,11 @@ A structured framework for reviewing dashboards and data reports with the depth 
 of a senior data analyst. Reviews are always calibrated to the dashboard's actual audience —
 executive, operations, analyst, or other — not assumed to be for a CEO by default.
 
+This `SKILL.md` file is the first-choice, free-friendly way to use the framework across
+ChatGPT, Microsoft Copilot, Codex, Claude, Gemini, and other AI assistants. Paste it into the
+tool's instructions or use it as the system/developer prompt when a packaged skill install is
+not available.
+
 ---
 
 ## Activation Confirmation

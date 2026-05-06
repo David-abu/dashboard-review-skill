@@ -1,0 +1,8 @@
+interface:
+  display_name: "Dashboard Review"
+  short_description: "Review dashboards with audience-calibrated scoring"
+  brand_color: "#0F6E56"
+  default_prompt: "Use $dashboard-review to critique this dashboard and give me scored, audience-calibrated recommendations."
+
+policy:
+  allow_implicit_invocation: true

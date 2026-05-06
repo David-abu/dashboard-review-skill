@@ -1,72 +1,68 @@
-# Dashboard Review Skill for Claude
+# Dashboard Review Skill
 
-A structured framework for reviewing dashboards and data reports with the depth and rigour of a senior data analyst — packaged as a Claude skill you can install and share.
+A structured framework for reviewing dashboards, reports, and data visualizations with the depth of a senior data analyst.
 
-Reviews are always calibrated to the dashboard's **actual audience** (executive, operations, analyst, field worker, etc.) — never assumed to be for a CEO by default.
+Reviews are calibrated to the dashboard's actual audience, such as executives, department heads, operations managers, analysts, frontline workers, or external stakeholders. The skill does not assume every dashboard is built for a CEO.
 
----
+## What It Does
 
-## What This Skill Does
+When you share a dashboard as an image, PDF, screenshot, or text description, the framework produces a structured review covering:
 
-When you share a dashboard — as an image, PDF, screenshot, or text description — this skill produces a full structured review covering:
+- 6 scored dimensions: business question, domain knowledge, audience fit, data story, visual design, and actionability
+- Internal consistency checks for arithmetic, totals, units, and deviation signs
+- Time horizon checks for whether the data window supports the claims
+- 5+ analytical challenge questions framed for the actual audience
+- 3+ missing analyses a domain expert would run next
+- Top 3 prioritized recommendations
+- One specific thing done well
 
-- **6 scored dimensions**: Business Question, Domain Knowledge, Audience Fit, Data Story, Visual Design, Actionability
-- **Internal consistency checks**: Does the arithmetic add up? Are deviation signs correct?
-- **Time horizon adequacy**: Is the data window sufficient for the claims being made?
-- **5+ analytical challenge questions** framed for the specific audience
-- **3+ missing analyses** a domain expert would run immediately
-- **Top 3 prioritised recommendations** — specific and actionable
-- **One thing done well** — genuine, specific praise
+## Try It
 
----
-## Try It Now
+| Option | Best for | Cost model |
+|--------|----------|------------|
+| `SKILL.md` | First option for ChatGPT, Copilot, Codex, Claude, Gemini, or other AI users | Free or included for many users through their existing AI tool |
+| [Live Prompt Builder](https://david-abu.github.io/dashboard-review-skill/) | Anyone who wants a copy-ready review prompt | Free, no API key |
+| `dashboard-review.skill` | Claude users who want the skill installed | Uses the user's Claude plan |
 
-There are three ways to use the Dashboard Review Skill:
+## Free Public App
 
-| Option | Best for |
-|--------|----------|
-| 🔗 [Live Web App](https://david-abu.github.io/dashboard-review-skill/) | Anyone — no Claude account needed |
-| 🔗 [Claude Artifact](https://claude.ai/public/artifacts/3b9dd0c9-6590-4fce-bf8d-86687261c0bf) | Quick share via link |
-| ⬇️ [Install as Claude Skill](#installation) | Claude users who want it embedded in their workflow |
+The GitHub Pages app is a prompt builder. It does not call Anthropic, OpenAI, or any other model API.
 
-## To install on Claude for Claude users above
+How it works:
 
-### Option 1 — Install as a Claude Skill (recommended)
+1. Add dashboard context and optionally upload a screenshot.
+2. The app builds a structured review prompt in your browser.
+3. Copy the prompt into ChatGPT, Microsoft Copilot, Claude, Gemini, Codex, or another AI assistant.
+4. If you uploaded a screenshot, attach the same image in that AI chat.
 
-1. Download `dashboard-review.skill` from the [Releases](../../releases) page
-2. In Claude.ai, go to **Settings → Connectors → Customize → Skills → Plus Sign (+) → Upload Skill**
-3. Upload the `.skill` file
-4. Share a dashboard screenshot or describe a dashboard and ask Claude to review it
+This keeps the public app free to host and free to use. No visitor data or images are sent anywhere by the page.
 
----
+## Install As A Claude Skill
 
-## How to Confirm the Skill is Working
+1. Download `dashboard-review.skill` from the repo or Releases page.
+2. In Claude.ai, go to Settings -> Connectors -> Customize -> Skills -> Plus Sign (+) -> Upload Skill.
+3. Upload the `.skill` file.
+4. Share a dashboard screenshot or describe a dashboard and ask Claude to review it.
 
-After installing, open a new Claude conversation and type:
+To confirm it is working, start a new Claude conversation and ask:
 
-```
+```text
 is the dashboard review skill active?
 ```
 
-Claude will respond confirming the skill is installed and list exactly what it can do. If Claude doesn't respond with the confirmation, the skill file wasn't installed correctly — try re-uploading it.
+## Use With ChatGPT, Copilot, Codex, Or Claude
 
----
+Try `SKILL.md` first. It is the most portable version of the framework and works with tools many people already have access to, including ChatGPT, Microsoft Copilot, Codex, Claude, Gemini, and other AI assistants.
 
-### Option 2 — Copy the Prompt Directly
+Paste `SKILL.md` into the model's instructions, add it as a local Codex skill, or use it as the system/developer prompt in an app.
 
-Copy the contents of `dashboard-review/SKILL.md` and paste it into any Claude conversation as your system prompt or instruction block.
+This repo also includes `agents/openai.yaml` so Codex-style skill lists can display the skill cleanly.
 
-### Option 3 — Use the Prompt in Your Own Tools
+## How To Trigger A Review
 
-The skill is plain Markdown. Drop it into any LLM pipeline that supports system prompts.
+Once installed or pasted into your AI tool, ask things like:
 
----
-
-## How to Trigger a Review
-
-Once installed, any of these prompts will trigger the skill:
-
-```
+```text
 Review my dashboard
 Critique this Power BI report
 Give feedback on this Tableau viz
@@ -75,23 +71,22 @@ Score my dashboard
 Help me improve this report
 ```
 
-Or upload a dashboard image/PDF and ask Claude to review it.
-
----
+Or upload a dashboard image/PDF and ask for a review.
 
 ## Review Framework Overview
 
-### Step 0 — Identify the Audience
+### Step 0: Identify The Audience
+
 The skill first determines who the dashboard was built for, then applies all scoring criteria through that lens.
 
 | Audience | Primary need | Review time |
 |---|---|---|
-| C-Suite / Executive | Situation awareness, go/no-go | 3–5 min |
-| Department Head / Director | Performance management | 5–10 min |
-| Operations Manager | Task prioritisation | 10–20 min |
+| C-Suite / Executive | Situation awareness, go/no-go | 3-5 min |
+| Department Head / Director | Performance management | 5-10 min |
+| Operations Manager | Task prioritization | 10-20 min |
 | Analyst / Data Team | Pattern investigation | As needed |
 | Field / Frontline Worker | Next action | 30 sec |
-| External Stakeholder | Confidence, accountability | 2–3 min |
+| External Stakeholder | Confidence, accountability | 2-3 min |
 
 ### 6 Dimensions Scored
 
@@ -102,53 +97,36 @@ The skill first determines who the dashboard was built for, then applies all sco
 | 3 | Audience Fit & Interactivity | Is the depth, detail, and interactivity right for this audience? |
 | 4 | Data Accuracy, Story & Definitions | Do the numbers add up? Are there context and benchmarks? |
 | 5 | Visual Design, Chart Choice & Consistency | Right charts? Top-left priority? Consistent across pages? |
-| 6 | Actionability & The So What | Every pattern → consequence → action for this audience |
+| 6 | Actionability & The So What | Does every pattern lead to consequence and action? |
 
-### Three Checks Most Reviewers Miss
+### Three Checks Many Reviews Miss
 
-These were discovered by comparing AI reviews against expert human reviews of the same dashboards:
-
-1. **Internal consistency** — add up the segment totals; do they match the stated overall?
-2. **Time horizon adequacy** — is the date range sufficient for the trend claims being made?
-3. **Deviation sign consistency** — is positive/negative used consistently throughout?
-
----
+1. Internal consistency: add up segment totals and compare them with the stated overall.
+2. Time horizon adequacy: check whether the date range is long enough for the claims.
+3. Deviation sign consistency: make sure positive and negative values mean the same thing everywhere.
 
 ## Repo Structure
 
-```
+```text
 dashboard-review-skill/
-├── README.md                          ← You are here
-├── dashboard-review/
-│   ├── SKILL.md                       ← The Claude skill (install this)
-│   ├── references/
-│   │   └── methodology.md             ← Full reference list + version history
-│   └── examples/
-│       └── construction-dashboard-review.md   ← Example of a full review output
-└── dashboard-review.skill             ← Packaged skill file for one-click install
+├── README.md                 # Project overview and setup notes
+├── SKILL.md                  # First-choice instructions for ChatGPT, Copilot, Codex, Claude, and other AI tools
+├── dashboard-review.skill    # Packaged Claude skill archive
+├── agents/
+│   └── openai.yaml           # ChatGPT/Codex skill metadata
+├── docs/
+│   └── index.html            # Free GitHub Pages prompt builder
+└── .gitignore                # Local tooling ignores
 ```
 
----
+## Roadmap
 
-## Version History
-
-| Version | Summary |
-|---|---|
-| v1–v4 | Initial framework, book training, image support, challenge questions |
-| v5 | Three expert-review fixes: internal consistency, time horizon, deviation signs |
-| v6 | Microsoft Learn + Tableau sources: top-left rule, visual count, interactivity, accessibility |
-| v6.1 | **Removed CEO/executive bias.** Step 0 audience identification now drives all scoring. |
-
----
-
-## Contributing
-
-Issues, improvements, and new example reviews are welcome. Open a PR or file an issue.
-
-Built by **David Abu** · Shared with the [Data Community Africa](https://www.datacommunityafrica.org/) community.
-
----
+- Refresh the packaged `dashboard-review.skill` after source updates.
+- Add example review prompts and outputs.
+- Add a short guide for installing `SKILL.md` as a local Codex skill.
 
 ## License
 
-MIT — use freely, adapt as needed, attribution appreciated.
+MIT. Use freely, adapt as needed, attribution appreciated.
+
+Built by David Abu and shared with the Data Community Africa community.
